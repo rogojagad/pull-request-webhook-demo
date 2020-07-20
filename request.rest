@@ -1,0 +1,33 @@
+@host = http://localhost:5000
+
+###
+POST http://localhost:5000/callback/bitbucket/reviewer
+Content-Type: application/json
+Accept: application/json
+
+{
+    "comment": {
+        "content": {
+            "raw": "please check"
+        },
+        "user": {
+            "display_name": "Rogo Jagad"
+        }
+    },
+    "pullrequest": {
+        "links": {
+            "html": "google.com"
+        },
+        "title": "Develop",
+        "reviewers": [
+            {
+                "display_name": "Reviewer 1",
+                "account_id": "reviewer_1"
+            },
+            {
+                "display_name": "Reviewer 2",
+                "account_id": "reviewer_2"
+            }
+        ]
+    }
+}
