@@ -1,8 +1,9 @@
 const botFactory = require("./bot/factory");
+const camelCaseKeys = require("./utils").convertKeysToCamelCase;
 const messageFactory = require("./message/factory");
 const parseReviewerId = require("./service").parseReviewerId;
 const repository = require("./repository");
-const camelCaseKeys = require("./utils").convertKeysToCamelCase;
+const User = require("./const/User");
 
 exports.reviewerAdded = async (req, res) => {
     const body = camelCaseKeys(req.body);
@@ -18,9 +19,9 @@ exports.reviewerAdded = async (req, res) => {
 
         users.forEach((user) => {
             botClient.sendMessage(
-                user.data()["chat_id"],
+                user.data()[User.ATTRIBUTE_CHAT_ID],
                 messageFactory.constructMessage(
-                    user.data()["name"],
+                    user.data()[User.ATTRIBUTE_CHAT_ID],
                     pullrequest
                 )
             );
