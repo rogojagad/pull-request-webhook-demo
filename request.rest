@@ -8,7 +8,7 @@ Accept: application/json
 {
     "comment": {
         "content": {
-            "raw": "please check"
+            "raw": "please review"
         },
         "user": {
             "display_name": "Rogo Jagad"
