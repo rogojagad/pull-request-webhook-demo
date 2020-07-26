@@ -34,7 +34,14 @@ exports.handleRegisterCommand = async (msg) => {
 
     botClient.sendMessage(id, `Registering your data`);
 
-    await service.createOneUser(id, bitbucketId, fullname);
+    const result = await service.createOneUser(id, bitbucketId, fullname);
 
-    botClient.sendMessage(id, `Data sucesfully registered`);
+    if (result === undefined) {
+        botClient.sendMessage(
+            id,
+            `User with Bitbucket ID ${bitbucketId} already exists`
+        );
+    } else {
+        botClient.sendMessage(id, `Succesfuly register your data`);
+    }
 };
