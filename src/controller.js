@@ -10,6 +10,7 @@ exports.reviewerAdded = async (req, res) => {
 
     if (comment && botClient) {
         const result = service.parseRequestBody(comment, pullrequest);
+        console.log(comment, pullrequest, result);
 
         if (result.isReviewRequest) {
             const users = await repository.readUsersByBitbucketId(
