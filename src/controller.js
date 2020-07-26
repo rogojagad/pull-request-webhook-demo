@@ -1,9 +1,7 @@
 const botFactory = require("./bot/factory");
 const camelCaseKeys = require("./utils").convertKeysToCamelCase;
-const messageFactory = require("./message/factory");
-const parseReviewerId = require("./service").parseReviewerId;
 const repository = require("./repository");
-const User = require("./const/User");
+const service = require("./service");
 
 exports.reviewerAdded = async (req, res) => {
     const body = camelCaseKeys(req.body);
@@ -11,23 +9,17 @@ exports.reviewerAdded = async (req, res) => {
     const botClient = botFactory.getInstance();
 
     if (comment && botClient) {
-        const result = parseReviewerId(comment, pullrequest);
+        const result = service.parseRequestBody(comment, pullrequest);
 
-        const users = await repository.readUsersByBitbucketId(
-            result.reviewerIds
-        );
-
-        users.forEach((user) => {
-            botClient.sendMessage(
-                user.data()[User.ATTRIBUTE_CHAT_ID],
-                messageFactory.constructMessage(
-                    user.data()[User.ATTRIBUTE_CHAT_ID],
-                    pullrequest
-                )
+        if (result.isReviewRequest) {
+            const users = await repository.readUsersByBitbucketId(
+                result.reviewerIds
             );
-        });
 
-        return res.status(200).json(result);
+            service.sendMessageToAllUsers(users, pullrequest);
+
+            return res.status(200).json(result);
+        }
     }
 
     return res.status(204).json({});
