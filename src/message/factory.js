@@ -1,9 +1,12 @@
-exports.constructMessage = (reviewerName, pullRequest) => {
+exports.constructMessage = (
+    reviewerName,
+    pullRequest,
+    pullRequestOwnerName
+) => {
     let body = ``;
-    console.log(pullRequest.links.html);
 
     body += `Hi ${reviewerName},\n\n`;
-    body += `${pullRequest.pullRequestOwnerName} need your review on this following PR:\n\n`;
+    body += `${pullRequestOwnerName} need your review on this following PR:\n\n`;
     body += `Title: ${pullRequest.title}\n`;
     body += `Link: ${pullRequest.links.html.href}\n\n`;
     body += `Thank you`;

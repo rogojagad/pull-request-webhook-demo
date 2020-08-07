@@ -28,7 +28,11 @@ exports.parseRequestBody = (comment, pullrequest) => {
     };
 };
 
-exports.sendMessageToAllUsers = async (users, pullRequest) => {
+exports.sendMessageToAllUsers = async (
+    users,
+    pullRequest,
+    pullRequestOwnerName
+) => {
     const botClient = botFactory.getInstance();
 
     users.forEach((user) => {
@@ -36,7 +40,8 @@ exports.sendMessageToAllUsers = async (users, pullRequest) => {
             user.data()[User.ATTRIBUTE_CHAT_ID],
             messageFactory.constructMessage(
                 user.data()[User.ATTRIBUTE_NAME],
-                pullRequest
+                pullRequest,
+                pullRequestOwnerName
             )
         );
     });
