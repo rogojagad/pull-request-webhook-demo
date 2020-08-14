@@ -50,7 +50,7 @@ exports.sendMessageToAllUsers = async (
 exports.createOneUser = async (chatId, bitbucketId, username) => {
     const existingData = await repository.readOneUserByBitbucketId(bitbucketId);
 
-    if (existingData !== undefined) {
+    if (existingData === undefined) {
         const dataObj = Object();
 
         dataObj[User.ATTRIBUTE_BITBUCKET_ID] = bitbucketId;
