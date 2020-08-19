@@ -1,6 +1,8 @@
 name: Node.js CI
 
 on:
+    commit:
+        branches: [master]
     pull_request:
         branches: [master]
 
