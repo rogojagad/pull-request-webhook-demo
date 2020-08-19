@@ -16,7 +16,7 @@ exports.reviewerAdded = async (req, res) => {
                 result.reviewerIds
             );
 
-            service.sendMessageToAllUsers(
+            service.sendMessageToAllReviewers(
                 users,
                 pullrequest,
                 result.commenterName

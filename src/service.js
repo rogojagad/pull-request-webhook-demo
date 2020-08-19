@@ -29,7 +29,11 @@ exports.parseRequestBody = (comment, pullrequest) => {
     };
 };
 
-exports.sendMessageToAllUsers = async (users, pullRequest, commenterName) => {
+exports.sendMessageToAllReviewers = async (
+    users,
+    pullRequest,
+    commenterName
+) => {
     const botClient = botFactory.getInstance();
 
     users.forEach((user) => {
