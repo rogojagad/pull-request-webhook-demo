@@ -19,7 +19,7 @@ exports.reviewerAdded = async (req, res) => {
             service.sendMessageToAllUsers(
                 users,
                 pullrequest,
-                result.pullRequestOwnerName
+                result.commenterName
             );
 
             return res.status(200).json(result);

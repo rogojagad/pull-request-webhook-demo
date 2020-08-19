@@ -24,16 +24,12 @@ exports.parseRequestBody = (comment, pullrequest) => {
 
     return {
         isReviewRequest: isPleaseReviewRequest,
-        pullRequestOwnerName: displayName,
+        commenterName: displayName,
         reviewerIds: reviewerIds,
     };
 };
 
-exports.sendMessageToAllUsers = async (
-    users,
-    pullRequest,
-    pullRequestOwnerName
-) => {
+exports.sendMessageToAllUsers = async (users, pullRequest, commenterName) => {
     const botClient = botFactory.getInstance();
 
     users.forEach((user) => {
@@ -42,7 +38,7 @@ exports.sendMessageToAllUsers = async (
             messageFactory.constructMessage(
                 user.data()[User.ATTRIBUTE_NAME],
                 pullRequest,
-                pullRequestOwnerName
+                commenterName
             )
         );
     });
