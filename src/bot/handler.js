@@ -1,6 +1,7 @@
 const botFactory = require("./factory");
 const camelCaseKeys = require("./../utils").convertKeysToCamelCase;
 const service = require("./../service");
+const UserAlreadyExistsException = require("./../exception/UserAlreadyExistsException");
 
 exports.handleRegisterCommand = async (msg) => {
     const message = camelCaseKeys(msg);
@@ -34,14 +35,18 @@ exports.handleRegisterCommand = async (msg) => {
 
     botClient.sendMessage(id, `Registering your data`);
 
-    const result = await service.createOneUser(id, bitbucketId, fullname);
+    try {
+        await service.createOneUser(id, bitbucketId, fullname);
+    } catch (error) {
+        if (error instanceof UserAlreadyExistsException) {
+            botClient.sendMessage(
+                id,
+                `User with Bitbucket ID ${bitbucketId} already exists`
+            );
+        }
 
-    if (result === undefined) {
-        botClient.sendMessage(
-            id,
-            `User with Bitbucket ID ${bitbucketId} already exists`
-        );
-    } else {
-        botClient.sendMessage(id, `Succesfuly register your data`);
+        return;
     }
+
+    botClient.sendMessage(id, `Succesfuly register your data`);
 };

@@ -4,6 +4,7 @@ const botFactory = require("./bot/factory");
 const messageFactory = require("./message/factory");
 const repository = require("./repository");
 const User = require("./const/User");
+const UserAlreadyExistsException = require("./exception/UserAlreadyExistsException");
 
 exports.parseRequestBody = (comment, pullrequest) => {
     const {
@@ -23,15 +24,15 @@ exports.parseRequestBody = (comment, pullrequest) => {
 
     return {
         isReviewRequest: isPleaseReviewRequest,
-        pullRequestOwnerName: displayName,
+        commenterName: displayName,
         reviewerIds: reviewerIds,
     };
 };
 
-exports.sendMessageToAllUsers = async (
+exports.sendMessageToAllReviewers = async (
     users,
     pullRequest,
-    pullRequestOwnerName
+    commenterName
 ) => {
     const botClient = botFactory.getInstance();
 
@@ -41,7 +42,7 @@ exports.sendMessageToAllUsers = async (
             messageFactory.constructMessage(
                 user.data()[User.ATTRIBUTE_NAME],
                 pullRequest,
-                pullRequestOwnerName
+                commenterName
             )
         );
     });
@@ -61,5 +62,5 @@ exports.createOneUser = async (chatId, bitbucketId, username) => {
         return result;
     }
 
-    return existingData;
+    throw new UserAlreadyExistsException(existingData);
 };

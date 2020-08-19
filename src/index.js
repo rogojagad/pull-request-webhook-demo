@@ -30,5 +30,7 @@ app.listen(port, (err) => {
 });
 
 const bot = botFactory.createOne();
-bot.setWebHook(`${url}/bot${token}`);
+if (process.env.NODE_ENV === "production") {
+    bot.setWebHook(`${url}/bot${token}`);
+}
 botBootstraper.bootstrap(bot);

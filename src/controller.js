@@ -16,10 +16,10 @@ exports.reviewerAdded = async (req, res) => {
                 result.reviewerIds
             );
 
-            service.sendMessageToAllUsers(
+            service.sendMessageToAllReviewers(
                 users,
                 pullrequest,
-                result.pullRequestOwnerName
+                result.commenterName
             );
 
             return res.status(200).json(result);
