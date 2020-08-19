@@ -4,6 +4,7 @@ const botFactory = require("./bot/factory");
 const messageFactory = require("./message/factory");
 const repository = require("./repository");
 const User = require("./const/User");
+const UserAlreadyExistsException = require("./exception/UserAlreadyExistsException");
 
 exports.parseRequestBody = (comment, pullrequest) => {
     const {
@@ -61,5 +62,5 @@ exports.createOneUser = async (chatId, bitbucketId, username) => {
         return result;
     }
 
-    return existingData;
+    throw new UserAlreadyExistsException(existingData);
 };
