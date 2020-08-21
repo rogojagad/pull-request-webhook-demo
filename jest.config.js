@@ -6,6 +6,7 @@ module.exports = {
         "/src/const",
         "/src/firebase",
         "/src/index.js",
+        "/src/server.js",
         "/tests",
     ],
     collectCoverage: true,

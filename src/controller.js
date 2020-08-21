@@ -1,4 +1,3 @@
-const botFactory = require("./bot/factory");
 const camelCaseKeys = require("./utils").convertKeysToCamelCase;
 const repository = require("./repository");
 const service = require("./service");
@@ -6,9 +5,8 @@ const service = require("./service");
 exports.reviewerAdded = async (req, res) => {
     const body = camelCaseKeys(req.body);
     const { comment, pullrequest } = body;
-    const botClient = botFactory.getInstance();
 
-    if (comment && botClient) {
+    if (comment) {
         const result = service.parseRequestBody(comment, pullrequest);
 
         if (result.isReviewRequest) {
