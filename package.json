@@ -5,7 +5,8 @@
     "main": "src/index.js",
     "scripts": {
         "start": "nodemon src/server.js",
-        "test": "jest --detectOpenHandles"
+        "test": "jest",
+        "test:coverage": "jest --collect-coverage"
     },
     "author": "Rogo Jagad Alit",
     "license": "ISC",

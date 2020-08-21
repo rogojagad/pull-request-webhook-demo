@@ -12,5 +12,5 @@ module.exports = {
     collectCoverage: true,
     collectCoverageFrom: ["src/**/*.{js,jsx}"],
     coverageDirectory: "<rootDir>/coverage",
-    coverageReporters: ["html", "text"],
+    coverageReporters: ["html", "text", "xml"],
 };
