@@ -9,8 +9,8 @@ module.exports = {
         "/src/server.js",
         "/tests",
     ],
-    collectCoverage: true,
+    collectCoverage: false,
     collectCoverageFrom: ["src/**/*.{js,jsx}"],
     coverageDirectory: "<rootDir>/coverage",
-    coverageReporters: ["html", "text", "xml"],
+    coverageReporters: ["html", "text"],
 };

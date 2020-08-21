@@ -6,7 +6,7 @@
     "scripts": {
         "start": "nodemon src/server.js",
         "test": "jest",
-        "test:coverage": "jest --collect-coverage"
+        "test:coverage": "jest --ci --coverage && codecov"
     },
     "author": "Rogo Jagad Alit",
     "license": "ISC",
@@ -22,6 +22,7 @@
         "nodemon": "^2.0.4"
     },
     "devDependencies": {
+        "codecov": "^3.7.2",
         "jest": "^26.4.0",
         "supertest": "^4.0.2"
     }
