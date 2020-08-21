@@ -38,7 +38,8 @@ jobs:
                   npm run build --if-present
                   npm run test:coverage
 
-            - name: Creating coverage badge
+            - name: Upload coverage report to Codecov
               uses: codecov/codecov-action@v1
               with:
+                  token: ${{ secrets.CODECOV_KEY }}
                   file: "./coverage/coverage-final.json"
