@@ -16,9 +16,11 @@
         "express": "^4.17.1",
         "firebase": "^7.15.5",
         "firebase-admin": "^8.13.0",
-        "jest": "^26.4.0",
         "kill-port": "^1.6.0",
         "node-telegram-bot-api": "^0.50.0",
         "nodemon": "^2.0.4"
+    },
+    "devDependencies": {
+        "jest": "^26.4.0"
     }
 }
