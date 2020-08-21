@@ -6,10 +6,11 @@ module.exports = {
         "/src/const",
         "/src/firebase",
         "/src/index.js",
+        "/src/server.js",
         "/tests",
     ],
-    collectCoverage: true,
+    collectCoverage: false,
     collectCoverageFrom: ["src/**/*.{js,jsx}"],
     coverageDirectory: "<rootDir>/coverage",
-    coverageReporters: ["html", "text"],
+    coverageReporters: ["json"],
 };
