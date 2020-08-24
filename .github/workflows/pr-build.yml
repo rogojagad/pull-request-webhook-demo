@@ -6,7 +6,7 @@ on:
 
 jobs:
     build:
-        name: Build on PR to Master (${{ matrix.node_version }} - ${{ matrix.os }})
+        name: Build on PR to Master on ${{ matrix.os }}
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
