@@ -1,10 +1,10 @@
 process.env["NTBA_FIX_319"] = 1;
 import "dotenv/config";
+import bodyParser from "body-parser";
+import controller from "./controller";
+import express from "express";
 
-const controller = require("./controller");
-const express = require("express");
 const app = express();
-const bodyParser = require("body-parser");
 
 const token = process.env.TELEGRAM_TOKEN;
 

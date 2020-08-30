@@ -2,7 +2,7 @@ import { convertKeysToCamelCase } from "./utils";
 import repository from "./repository";
 import service from "./service";
 
-exports.reviewerAdded = async (req, res) => {
+async function reviewerAdded(req, res) {
     const body = convertKeysToCamelCase(req.body);
     const { comment, pullrequest } = body;
 
@@ -25,4 +25,8 @@ exports.reviewerAdded = async (req, res) => {
     }
 
     return res.status(204).json({});
+}
+
+module.exports = {
+    reviewerAdded: reviewerAdded,
 };
