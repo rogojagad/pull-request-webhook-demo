@@ -5,6 +5,7 @@
     "main": "src/index.js",
     "scripts": {
         "start": "nodemon --exec babel-node src/server.js",
+        "serve": "babel-node src/server.js",
         "test": "jest",
         "test:coverage": "jest --ci --coverage"
     },
