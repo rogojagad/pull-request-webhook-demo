@@ -20,6 +20,7 @@ app.use(_bodyParser.default.json());
 app.disable("etag");
 app.post("/callback/bitbucket/reviewer", _controller.reviewerAdded);
 app.post(`/bot${token}`, (req, res) => {
+  const bot = new TelegramBotClient().getInstance();
   bot.processUpdate(req.body);
   res.sendStatus(200);
 });
