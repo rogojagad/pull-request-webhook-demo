@@ -27,6 +27,4 @@ async function reviewerAdded(req, res) {
     return res.status(204).json({});
 }
 
-module.exports = {
-    reviewerAdded: reviewerAdded,
-};
+export { reviewerAdded };

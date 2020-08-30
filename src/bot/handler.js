@@ -3,7 +3,7 @@ import service from "./../service";
 import TelegramBotClient from "./client";
 import UserAlreadyExistsException from "./../exception/UserAlreadyExistsException";
 
-exports.handleRegisterCommand = async (msg) => {
+async function handleRegisterCommand(msg) {
     const message = convertKeysToCamelCase(msg);
     const botClient = new TelegramBotClient().getInstance();
 
@@ -50,4 +50,6 @@ exports.handleRegisterCommand = async (msg) => {
     }
 
     botClient.sendMessage(id, `Succesfuly register your data`);
-};
+}
+
+export { handleRegisterCommand };
