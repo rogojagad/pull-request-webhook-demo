@@ -1,7 +1,8 @@
-const app = require("./index");
+import app from "./index";
+import bootstrap from "./bot/bootstraper";
+import TelegramBotClient from "./bot/client";
+
 const port = process.env.PORT || 5000;
-const botBootstraper = require("./bot/bootstraper");
-import { TelegramBotClient } from "./bot/factory";
 const url = process.env.APP_HOST;
 
 app.listen(port, (err) => {
@@ -18,4 +19,5 @@ const bot = new TelegramBotClient().getInstance();
 if (process.env.NODE_ENV === "production") {
     bot.setWebHook(`${url}/bot${token}`);
 }
-botBootstraper.bootstrap(bot);
+
+bootstrap(bot);

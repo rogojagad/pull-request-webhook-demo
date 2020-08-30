@@ -1,11 +1,11 @@
-const camelCaseKeys = require("./../utils").convertKeysToCamelCase;
-const service = require("./../service");
-const UserAlreadyExistsException = require("./../exception/UserAlreadyExistsException");
-import { createOneBotClient } from "./../bot/factory";
+import { convertKeysToCamelCase } from "./../utils";
+import service from "./../service";
+import TelegramBotClient from "./client";
+import UserAlreadyExistsException from "./../exception/UserAlreadyExistsException";
 
 exports.handleRegisterCommand = async (msg) => {
-    const message = camelCaseKeys(msg);
-    const botClient = createOneBotClient();
+    const message = convertKeysToCamelCase(msg);
+    const botClient = new TelegramBotClient().getInstance();
 
     const {
         from: { firstName, lastName },

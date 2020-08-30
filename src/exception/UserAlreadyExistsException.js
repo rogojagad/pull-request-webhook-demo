@@ -1,4 +1,4 @@
-class UserAlreadyExistsException extends Error {
+export default class UserAlreadyExistsException extends Error {
     constructor(user, ...params) {
         super(...params);
 
@@ -6,5 +6,3 @@ class UserAlreadyExistsException extends Error {
         this.user = user;
     }
 }
-
-module.exports = UserAlreadyExistsException;
