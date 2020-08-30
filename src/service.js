@@ -62,8 +62,4 @@ async function createOneUser(chatId, bitbucketId, username) {
     throw new UserAlreadyExistsException(existingData);
 }
 
-module.exports = {
-    createOneUser: createOneUser,
-    parseRequestBody: parseRequestBody,
-    sendMessageToAllReviewers: sendMessageToAllReviewers,
-};
+export { createOneUser, sendMessageToAllReviewers, parseRequestBody };
