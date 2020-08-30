@@ -1,4 +1,4 @@
-exports.constructMessage = (reviewerName, pullRequest, commenterName) => {
+export function constructMessage(reviewerName, pullRequest, commenterName) {
     let body = ``;
 
     body += `Hi ${reviewerName},\n\n`;
@@ -8,4 +8,4 @@ exports.constructMessage = (reviewerName, pullRequest, commenterName) => {
     body += `Thank you`;
 
     return body;
-};
+}

@@ -4,9 +4,13 @@ exports.mock = () => {
         readOneUserByBitbucketId: jest.fn(),
     }));
 
-    jest.mock("../../../src/bot/factory", () => ({
-        getInstance: jest.fn(),
-    }));
+    jest.mock("../../../src/bot/client", () => {
+        return function TelegramBotClient() {
+            this.getInstance = jest.fn(() => ({
+                sendMessage: jest.fn(),
+            }));
+        };
+    });
 
     jest.mock("../../../src/message/factory", () => ({
         constructMessage: jest.fn(),

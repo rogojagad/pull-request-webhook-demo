@@ -1,11 +1,11 @@
-const botFactory = require("./factory");
-const camelCaseKeys = require("./../utils").convertKeysToCamelCase;
-const service = require("./../service");
-const UserAlreadyExistsException = require("./../exception/UserAlreadyExistsException");
+import { convertKeysToCamelCase } from "./../utils";
+import service from "./../service";
+import TelegramBotClient from "./client";
+import UserAlreadyExistsException from "./../exception/UserAlreadyExistsException";
 
-exports.handleRegisterCommand = async (msg) => {
-    const message = camelCaseKeys(msg);
-    const botClient = botFactory.getInstance();
+async function handleRegisterCommand(msg) {
+    const message = convertKeysToCamelCase(msg);
+    const botClient = new TelegramBotClient().getInstance();
 
     const {
         from: { firstName, lastName },
@@ -38,6 +38,7 @@ exports.handleRegisterCommand = async (msg) => {
     try {
         await service.createOneUser(id, bitbucketId, fullname);
     } catch (error) {
+        console.error(error);
         if (error instanceof UserAlreadyExistsException) {
             botClient.sendMessage(
                 id,
@@ -49,4 +50,6 @@ exports.handleRegisterCommand = async (msg) => {
     }
 
     botClient.sendMessage(id, `Succesfuly register your data`);
-};
+}
+
+export { handleRegisterCommand };

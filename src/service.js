@@ -1,12 +1,12 @@
+import { constructMessage } from "./message/factory";
+import * as repository from "./repository";
+import TelegramBotClient from "./bot/client";
+import User from "./const/User";
+import UserAlreadyExistsException from "./exception/UserAlreadyExistsException";
+
 const PLEASE_REVIEW_QUERY = "please review";
 
-const botFactory = require("./bot/factory");
-const messageFactory = require("./message/factory");
-const repository = require("./repository");
-const User = require("./const/User");
-const UserAlreadyExistsException = require("./exception/UserAlreadyExistsException");
-
-exports.parseRequestBody = (comment, pullrequest) => {
+function parseRequestBody(comment, pullrequest) {
     const {
         content: { raw },
         user: { displayName },
@@ -17,7 +17,7 @@ exports.parseRequestBody = (comment, pullrequest) => {
     const reviewerIds = Array();
 
     if (isPleaseReviewRequest) {
-        for (reviewer of reviewers) {
+        for (let reviewer of reviewers) {
             reviewerIds.push(reviewer.accountId);
         }
     }
@@ -27,31 +27,28 @@ exports.parseRequestBody = (comment, pullrequest) => {
         commenterName: displayName,
         reviewerIds: reviewerIds,
     };
-};
+}
 
-exports.sendMessageToAllReviewers = async (
-    users,
-    pullRequest,
-    commenterName
-) => {
-    const botClient = botFactory.getInstance();
+async function sendMessageToAllReviewers(users, pullRequest, commenterName) {
+    const botClient = new TelegramBotClient().getInstance();
 
     users.forEach((user) => {
         botClient.sendMessage(
             user.data()[User.ATTRIBUTE_CHAT_ID],
-            messageFactory.constructMessage(
+            constructMessage(
                 user.data()[User.ATTRIBUTE_NAME],
                 pullRequest,
                 commenterName
             )
         );
     });
-};
+}
 
-exports.createOneUser = async (chatId, bitbucketId, username) => {
+async function createOneUser(chatId, bitbucketId, username) {
     const existingData = await repository.readOneUserByBitbucketId(bitbucketId);
+    const isNotAlreadyExists = existingData.data() === undefined;
 
-    if (existingData === undefined) {
+    if (isNotAlreadyExists) {
         const dataObj = Object();
 
         dataObj[User.ATTRIBUTE_BITBUCKET_ID] = bitbucketId;
@@ -63,4 +60,6 @@ exports.createOneUser = async (chatId, bitbucketId, username) => {
     }
 
     throw new UserAlreadyExistsException(existingData);
-};
+}
+
+export { createOneUser, sendMessageToAllReviewers, parseRequestBody };

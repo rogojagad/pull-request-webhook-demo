@@ -1,9 +1,9 @@
-const camelCaseKeys = require("./utils").convertKeysToCamelCase;
-const repository = require("./repository");
-const service = require("./service");
+import { convertKeysToCamelCase } from "./utils";
+import repository from "./repository";
+import service from "./service";
 
-exports.reviewerAdded = async (req, res) => {
-    const body = camelCaseKeys(req.body);
+async function reviewerAdded(req, res) {
+    const body = convertKeysToCamelCase(req.body);
     const { comment, pullrequest } = body;
 
     if (comment) {
@@ -25,4 +25,6 @@ exports.reviewerAdded = async (req, res) => {
     }
 
     return res.status(204).json({});
-};
+}
+
+export { reviewerAdded };

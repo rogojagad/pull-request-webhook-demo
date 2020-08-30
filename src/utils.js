@@ -1,5 +1,5 @@
 const camelCaseKeys = require("camelcase-keys");
 
-exports.convertKeysToCamelCase = (obj) => {
+export function convertKeysToCamelCase(obj) {
     return camelCaseKeys(obj, { deep: true });
-};
+}
