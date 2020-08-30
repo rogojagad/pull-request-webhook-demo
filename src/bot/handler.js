@@ -1,11 +1,11 @@
-const botFactory = require("./factory");
 const camelCaseKeys = require("./../utils").convertKeysToCamelCase;
 const service = require("./../service");
 const UserAlreadyExistsException = require("./../exception/UserAlreadyExistsException");
+import { createOneBotClient } from "./../bot/factory";
 
 exports.handleRegisterCommand = async (msg) => {
     const message = camelCaseKeys(msg);
-    const botClient = botFactory.getInstance();
+    const botClient = createOneBotClient();
 
     const {
         from: { firstName, lastName },

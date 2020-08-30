@@ -1,5 +1,5 @@
 process.env["NTBA_FIX_319"] = 1;
-require("dotenv").config();
+import "dotenv/config";
 
 const controller = require("./controller");
 const express = require("express");
