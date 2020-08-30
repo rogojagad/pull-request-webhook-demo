@@ -2,7 +2,7 @@ const { mock } = require("./Mock");
 
 mock();
 
-const botFactory = require("./../../../src/bot/factory");
+import TelegramBotClient from "./../../../src/bot/client";
 const messageFactory = require("./../../../src/message/factory");
 const repository = require("../../../src/repository");
 const service = require("../../../src/service");
@@ -22,6 +22,9 @@ describe("service test", () => {
                 existingData[User.ATTRIBUTE_BITBUCKET_ID] = bitbucketId;
                 existingData[User.ATTRIBUTE_CHAT_ID] = chatId;
                 existingData[User.ATTRIBUTE_NAME] = username;
+                existingData.data = () => {
+                    return undefined;
+                };
 
                 repository.readOneUserByBitbucketId.mockReturnValue(
                     existingData
@@ -32,6 +35,7 @@ describe("service test", () => {
                 try {
                     await service.createOneUser(chatId, bitbucketId, username);
                 } catch (error) {
+                    console.error(error);
                     expect(error).toBeInstanceOf(UserAlreadyExistsException);
                 }
             });
@@ -45,7 +49,9 @@ describe("service test", () => {
                 newData[User.ATTRIBUTE_CHAT_ID] = chatId;
                 newData[User.ATTRIBUTE_NAME] = username;
 
-                repository.readOneUserByBitbucketId.mockReturnValue(undefined);
+                repository.readOneUserByBitbucketId.mockReturnValue({
+                    data: () => {},
+                });
                 repository.createOneUser.mockReturnValue(newData);
             });
 
@@ -68,14 +74,6 @@ describe("service test", () => {
     });
 
     describe("sendMessageToAllReviewers", () => {
-        const botClient = {
-            sendMessage: jest.fn(),
-        };
-
-        beforeAll(() => {
-            botFactory.getInstance.mockReturnValue(botClient);
-        });
-
         it("sends notification message to all reviewers", async () => {
             const users = [
                 {
@@ -108,14 +106,11 @@ describe("service test", () => {
                 commenterName
             );
 
-            expect(botClient.sendMessage.mock.calls.length).toBe(
-                expectedCallCount
-            );
             expect(messageFactory.constructMessage.mock.calls.length).toBe(
                 expectedCallCount
             );
 
-            for (user of users) {
+            for (let user of users) {
                 expect(messageFactory.constructMessage).toHaveBeenCalledWith(
                     user.data()[User.ATTRIBUTE_NAME],
                     pullRequest,

@@ -36,7 +36,7 @@ exports.handleRegisterCommand = async (msg) => {
     botClient.sendMessage(id, `Registering your data`);
 
     try {
-        await service.createUser(id, bitbucketId, fullname);
+        await service.createOneUser(id, bitbucketId, fullname);
     } catch (error) {
         console.error(error);
         if (error instanceof UserAlreadyExistsException) {

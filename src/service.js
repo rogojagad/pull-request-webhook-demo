@@ -1,5 +1,5 @@
 import { constructMessage } from "./message/factory";
-import repository from "./repository";
+import * as repository from "./repository";
 import TelegramBotClient from "./bot/client";
 import User from "./const/User";
 import UserAlreadyExistsException from "./exception/UserAlreadyExistsException";
@@ -17,7 +17,7 @@ function parseRequestBody(comment, pullrequest) {
     const reviewerIds = Array();
 
     if (isPleaseReviewRequest) {
-        for (reviewer of reviewers) {
+        for (let reviewer of reviewers) {
             reviewerIds.push(reviewer.accountId);
         }
     }
