@@ -8,6 +8,8 @@ var _controller = require("./controller");
 
 var _express = _interopRequireDefault(require("express"));
 
+var _client = _interopRequireDefault(require("./bot/client"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 process.env["NTBA_FIX_319"] = 1;
@@ -20,7 +22,7 @@ app.use(_bodyParser.default.json());
 app.disable("etag");
 app.post("/callback/bitbucket/reviewer", _controller.reviewerAdded);
 app.post(`/bot${token}`, (req, res) => {
-  const bot = new TelegramBotClient().getInstance();
+  const bot = new _client.default().getInstance();
   bot.processUpdate(req.body);
   res.sendStatus(200);
 });

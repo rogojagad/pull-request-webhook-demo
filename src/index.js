@@ -3,6 +3,7 @@ import "dotenv/config";
 import bodyParser from "body-parser";
 import { reviewerAdded } from "./controller";
 import express from "express";
+import TelegramBotClient from "./bot/client";
 
 const app = express();
 
