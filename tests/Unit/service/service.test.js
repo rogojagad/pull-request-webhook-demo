@@ -106,9 +106,7 @@ describe("service test", () => {
                 commenterName
             );
 
-            expect(messageFactory.constructMessage.mock.calls.length).toBe(
-                expectedCallCount
-            );
+            expect(messageFactory.constructMessage.mock.calls.length).toBe(0);
 
             for (let user of users) {
                 expect(messageFactory.constructMessage).toHaveBeenCalledWith(

@@ -35,3 +35,7 @@ jobs:
                   npm ci
                   npm run build --if-present
                   npm run test:coverage
+
+            - name: Report if build failed
+              if: ${{ failure() }}
+              run: echo Testing tok
