@@ -36,6 +36,11 @@ jobs:
                   npm run build --if-present
                   npm run test:coverage
 
-            - name: Report if build failed
-              if: ${{ failure() }}
-              run: echo Testing tok
+            - name: Report if build success
+              if: ${{ success() }}
+              uses: satak/webrequest-action@master
+              with:
+                  url: https://postman-echo.com/post
+                  method: POST
+                  headers: '{"Content-Type": "application/json"}'
+                  payload: '{"message": "Build success"}'
