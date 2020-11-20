@@ -17,6 +17,8 @@ jobs:
             - name: Test Read PR Data
               run: |
                   echo ${{github.run_number}}
+                  echo ${{github.repository}}
+                  echo ${{github.ref}}
 
             - name: Checkout repository
               uses: actions/checkout@v2
@@ -56,4 +58,4 @@ jobs:
                   url: https://postman-echo.com/post
                   method: POST
                   headers: '{"Content-Type": "application/json"}'
-                  payload: '{"status": "success"}'
+                  payload: '{ "status": "success", "run_id": ${{github.run_id}} }'
