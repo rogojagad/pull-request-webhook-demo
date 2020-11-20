@@ -14,14 +14,9 @@ jobs:
                 os: [ubuntu-latest]
 
         steps:
-            - name: Prepare Env Variable
+            - name: Test Read PR Data
               run: |
-                  echo "PR_NUMBER=$(echo ${{github.event.number}} )" >> $GITHUB_ENV
-
-            - name: Test Read Env Variable
-              run: |
-                  echo ${PR_NUMBER}
-                  echo ${{github.event.number}}
+                  echo ${{github.event}}
 
             - name: Checkout repository
               uses: actions/checkout@v2
