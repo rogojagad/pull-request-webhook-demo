@@ -21,6 +21,7 @@ jobs:
               run: |
                   echo ${{github.event.pull_request.number}}
                   echo ${{github.event.pull_request.title}}
+                  echo ${{github.event.pull_request.html_url}}
 
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v1
@@ -48,7 +49,7 @@ jobs:
                   url: https://postman-echo.com/post
                   method: POST
                   headers: '{"Content-Type": "application/json"}'
-                  payload: '{ "status": "success", "repository": ${{github.repository}} }'
+                  payload: '{ "status": "success"}'
 
             - name: Report if build failed
               if: ${{ failure() }}
@@ -57,4 +58,4 @@ jobs:
                   url: https://postman-echo.com/post
                   method: POST
                   headers: '{"Content-Type": "application/json"}'
-                  payload: '{ "status": "failed", "repository": ${{github.repository}} }'
+                  payload: '{ "status": "failed"}'
