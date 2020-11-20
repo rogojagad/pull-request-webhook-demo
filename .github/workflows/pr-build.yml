@@ -16,7 +16,7 @@ jobs:
         steps:
             - name: Test Read PR Data
               run: |
-                  echo ${{github.run_number}}
+                  echo ${{github.run_id}}
                   echo ${{github.repository}}
                   echo ${{github.ref}}
 
