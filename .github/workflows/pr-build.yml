@@ -56,7 +56,7 @@ jobs:
                   payload: '{"message": "Build success"}'
 
             - name: Report if build failed
-              if: ${{ failed() }}
+              if: ${{ failure() }}
               uses: satak/webrequest-action@master
               with:
                   url: https://postman-echo.com/post
