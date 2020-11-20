@@ -15,8 +15,8 @@ jobs:
 
         steps:
             - name: Prepare Env Variable
-              env:
-                  PR_NUMBER: ${{ github.event.number }}
+              run: |
+                  echo "PR_NUMBER=$(echo ${{github.event.number}} )" >> $GITHUB_ENV
 
             - name: Test Read Env Variable
               run: |
