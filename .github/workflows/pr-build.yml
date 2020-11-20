@@ -19,9 +19,9 @@ jobs:
 
             - name: Setup Environment Variable
               run: |
-                  echo "PULL_REQUEST_NUMBER=$(echo ${{github.event.pull_request.number}} | cut -c 1-6)" >> $GITHUB_ENV
-                  echo "PULL_REQUEST_TITLE=$(echo ${{github.event.pull_request.title}} | cut -c 1-6)" >> $GITHUB_ENV
-                  echo "PULL_REQUEST_HTML_URL=$(echo ${{github.event.pull_request.html_url}} | cut -c 1-6)" >> $GITHUB_ENV
+                  echo "PULL_REQUEST_NUMBER=$(echo ${{github.event.pull_request.number}})" >> $GITHUB_ENV
+                  echo "PULL_REQUEST_TITLE=$(echo ${{github.event.pull_request.title}})" >> $GITHUB_ENV
+                  echo "PULL_REQUEST_HTML_URL=$(echo ${{github.event.pull_request.html_url}})" >> $GITHUB_ENV
 
             - name: Test Read Environment Variable
               run: |
