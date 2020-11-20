@@ -16,7 +16,7 @@ jobs:
         steps:
             - name: Test Read PR Data
               run: |
-                  echo ${{github.event}}
+                  echo ${{toJson(github.event)}}
 
             - name: Checkout repository
               uses: actions/checkout@v2
