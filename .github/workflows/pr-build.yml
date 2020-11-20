@@ -20,6 +20,7 @@ jobs:
             - name: Test Read Event Data
               run: |
                   echo ${{github.event.pull_request.number}}
+                  echo ${{github.event.pull_request.title}}
 
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v1
