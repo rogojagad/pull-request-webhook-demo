@@ -13,6 +13,6 @@ exports.mock = () => {
     });
 
     jest.mock("../../../src/message/factory", () => ({
-        constructMessage: jest.fn(),
+        constructRequestReviewMessage: jest.fn(),
     }));
 };

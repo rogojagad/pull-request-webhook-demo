@@ -1,4 +1,4 @@
-export function constructRequestReviewMessage(
+function constructRequestReviewMessage(
     reviewerName,
     pullRequest,
     commenterName
@@ -14,7 +14,7 @@ export function constructRequestReviewMessage(
     return body;
 }
 
-export function constructBuildResultMessage(htmlUrl, number, status, title) {
+function constructBuildResultMessage(htmlUrl, number, status, title) {
     let body = ``;
 
     body += `Build for Pull Request ${title} (${number}) ${status}.\n\n`;
@@ -22,3 +22,5 @@ export function constructBuildResultMessage(htmlUrl, number, status, title) {
 
     return body;
 }
+
+export { constructRequestReviewMessage, constructBuildResultMessage };
