@@ -1,4 +1,4 @@
-import { constructMessage } from "./message/factory";
+import { constructRequestReviewMessage } from "./message/factory";
 import * as repository from "./repository";
 import TelegramBotClient from "./bot/client";
 import User from "./const/User";
@@ -35,7 +35,7 @@ async function sendMessageToAllReviewers(users, pullRequest, commenterName) {
     users.forEach((user) => {
         botClient.sendMessage(
             user.data()[User.ATTRIBUTE_CHAT_ID],
-            constructMessage(
+            constructRequestReviewMessage(
                 user.data()[User.ATTRIBUTE_NAME],
                 pullRequest,
                 commenterName
@@ -43,6 +43,8 @@ async function sendMessageToAllReviewers(users, pullRequest, commenterName) {
         );
     });
 }
+
+async function sendBuildResultMessageToOwner(user, buildResult) {}
 
 async function createOneUser(chatId, bitbucketId, username) {
     const existingData = await repository.readOneUserByBitbucketId(bitbucketId);
