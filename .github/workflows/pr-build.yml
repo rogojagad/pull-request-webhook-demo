@@ -14,12 +14,12 @@ jobs:
                 os: [ubuntu-latest]
 
         steps:
-            - name: Test Read PR Data
-              run: |
-                  echo ${{github.pull_request}}
-
             - name: Checkout repository
               uses: actions/checkout@v2
+
+            - name: Test Read Event Data
+              run: |
+                  echo ${{github.event.pull_request.number}}
 
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v1
@@ -47,7 +47,7 @@ jobs:
                   url: https://postman-echo.com/post
                   method: POST
                   headers: '{"Content-Type": "application/json"}'
-                  payload: '{"message": "Build success"}'
+                  payload: '{ "status": "success", "repository": ${{github.repository}} }'
 
             - name: Report if build failed
               if: ${{ failure() }}
@@ -56,4 +56,4 @@ jobs:
                   url: https://postman-echo.com/post
                   method: POST
                   headers: '{"Content-Type": "application/json"}'
-                  payload: '{ "status": "success", "repository": ${{github.repository}} }'
+                  payload: '{ "status": "failed", "repository": ${{github.repository}} }'
