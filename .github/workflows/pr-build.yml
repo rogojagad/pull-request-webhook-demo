@@ -16,7 +16,7 @@ jobs:
         steps:
             - name: Test Read PR Data
               run: |
-                  echo ${{github.event.issue.title}}
+                  echo ${{github.pull_request}}
 
             - name: Checkout repository
               uses: actions/checkout@v2
@@ -47,7 +47,7 @@ jobs:
                   url: https://postman-echo.com/post
                   method: POST
                   headers: '{"Content-Type": "application/json"}'
-                  payload: ${{github}}
+                  payload: '{"message": "Build success"}'
 
             - name: Report if build failed
               if: ${{ failure() }}
