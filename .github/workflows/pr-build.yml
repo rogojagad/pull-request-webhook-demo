@@ -14,6 +14,16 @@ jobs:
                 os: [ubuntu-latest]
 
         steps:
+            - name: Prepare Build Env
+              uses: actions/github-script@0.3.0
+              with:
+                  github-token: ${{github.token}}
+                  script: |
+                      const core = require('@actions/core')
+                      const prNumber = context.payload.number
+                      core.exportVariable('PULL_REQUEST_NUMBER', prNumber)
+                      console.log(prNumber)
+
             - name: Checkout repository
               uses: actions/checkout@v2
 
@@ -44,3 +54,12 @@ jobs:
                   method: POST
                   headers: '{"Content-Type": "application/json"}'
                   payload: '{"message": "Build success"}'
+
+            - name: Report if build failed
+              if: ${{ failed() }}
+              uses: satak/webrequest-action@master
+              with:
+                  url: https://postman-echo.com/post
+                  method: POST
+                  headers: '{"Content-Type": "application/json"}'
+                  payload: '{"status": "success"}'
