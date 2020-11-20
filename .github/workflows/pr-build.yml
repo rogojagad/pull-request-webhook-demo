@@ -55,7 +55,7 @@ jobs:
                   url: https://postman-echo.com/post
                   method: POST
                   headers: "{\"Content-Type\": \"application/json\"}"
-                  payload: "{\"status\": \"success\", \"title\": ${{env.PULL_REQUEST_TITLE}}, \"number\": ${{env.PULL_REQUEST_NUMBER}}, \"html_url\": ${{env.PULL_REQUEST_HTML_URL}} }"
+                  payload: "{\"status\": \"success\", \"title\": ${{github.event.pull_request.title}}, \"number\": ${{github.event.pull_request.number}}, \"html_url\": ${{github.event.pull_request.html_url}} }"
 
             - name: Report if build failed
               if: ${{ failure() }}
@@ -64,4 +64,4 @@ jobs:
                   url: https://postman-echo.com/post
                   method: POST
                   headers: "{\"Content-Type\": \"application/json\"}"
-                  payload: "{\"status\": \"failed\", \"title\": ${{env.PULL_REQUEST_TITLE}}, \"number\": ${{env.PULL_REQUEST_NUMBER}}, \"html_url\": ${{env.PULL_REQUEST_HTML_URL}} }"
+                  payload: "{\"status\": \"failed\", \"title\": ${{github.event.pull_request.title}}, \"number\": ${{github.event.pull_request.number}}, \"html_url\": ${{github.event.pull_request.html_url}} }"
