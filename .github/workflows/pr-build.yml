@@ -21,6 +21,7 @@ jobs:
             - name: Test Read Env Variable
               run: |
                   echo ${PR_NUMBER}
+                  echo ${{github.event.number}}
 
             - name: Checkout repository
               uses: actions/checkout@v2
