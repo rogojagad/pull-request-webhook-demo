@@ -17,11 +17,17 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v2
 
-            - name: Test Read Event Data
+            - name: Setup Environment Variable
               run: |
-                  echo ${{github.event.pull_request.number}}
-                  echo ${{github.event.pull_request.title}}
-                  echo ${{github.event.pull_request.html_url}}
+                  echo "PULL_REQUEST_NUMBER=$(echo ${{github.event.pull_request.number}} | cut -c 1-6)" >> $GITHUB_ENV
+                  echo "PULL_REQUEST_TITLE=$(echo ${{github.event.pull_request.title}} | cut -c 1-6)" >> $GITHUB_ENV
+                  echo "PULL_REQUEST_HTML_URL=$(echo ${{github.event.pull_request.html_url}} | cut -c 1-6)" >> $GITHUB_ENV
+
+            - name: Test Read Environment Variable
+              run: |
+                  echo $PULL_REQUEST_NUMBER
+                  echo $PULL_REQUEST_TITLE
+                  echo $PULL_REQUEST_HTML_URL
 
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v1
