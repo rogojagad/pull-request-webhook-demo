@@ -52,7 +52,7 @@ jobs:
               if: ${{ success() }}
               uses: satak/webrequest-action@master
               with:
-                  url: https://postman-echo.com/post
+                  url: https://bitbucket-handler-demo.herokuapp.com/api/build_result
                   method: POST
                   headers: "{\"Content-Type\": \"application/json\"}"
                   payload: "{
@@ -67,7 +67,7 @@ jobs:
               if: ${{ failure() }}
               uses: satak/webrequest-action@master
               with:
-                  url: https://postman-echo.com/post
+                  url: https://bitbucket-handler-demo.herokuapp.com/api/build_result
                   method: POST
                   headers: "{\"Content-Type\": \"application/json\"}"
                   payload: "{
