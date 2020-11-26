@@ -1,6 +1,7 @@
 import { convertKeysToCamelCase } from "./utils";
 import * as repository from "./repository";
 import * as service from "./service";
+import BuildResult from "./const/BuildResult";
 
 async function reviewerAdded(req, res) {
     const body = convertKeysToCamelCase(req.body);
@@ -28,12 +29,14 @@ async function reviewerAdded(req, res) {
 }
 
 async function sendBuildResult(req, res) {
-    const body = convertKeysToCamelCase(req.body);
-    const { ownerId } = body;
+    const body = req.body;
+    const ownerId = body[BuildResult.ATTRIBUTE_OWNER_ID];
 
     const user = await repository.readOneUserByBitbucketId(ownerId);
 
-    console.log(user.data());
+    service.sendBuildResultMessageToOwner(user, body);
+
+    return res.status(200).json(body);
 }
 
 export { reviewerAdded, sendBuildResult };
