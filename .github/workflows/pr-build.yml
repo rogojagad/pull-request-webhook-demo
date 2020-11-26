@@ -17,6 +17,18 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v2
 
+            - name: Setup Environment Variable
+              run: |
+                  echo "PULL_REQUEST_NUMBER=$(echo ${{github.event.pull_request.number}})" >> $GITHUB_ENV
+                  echo "PULL_REQUEST_TITLE=$(echo ${{github.event.pull_request.title}})" >> $GITHUB_ENV
+                  echo "PULL_REQUEST_HTML_URL=$(echo ${{github.event.pull_request.html_url}})" >> $GITHUB_ENV
+
+            - name: Test Read Environment Variable
+              run: |
+                  echo $PULL_REQUEST_NUMBER
+                  echo $PULL_REQUEST_TITLE
+                  echo $PULL_REQUEST_HTML_URL
+
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v1
               with:
@@ -35,3 +47,33 @@ jobs:
                   npm ci
                   npm run build --if-present
                   npm run test:coverage
+
+            - name: Report if build success
+              if: ${{ success() }}
+              uses: satak/webrequest-action@master
+              with:
+                  url: https://bitbucket-handler-demo.herokuapp.com/api/build_result
+                  method: POST
+                  headers: "{\"Content-Type\": \"application/json\"}"
+                  payload: "{
+                    \"status\": \"success\",
+                    \"title\": \"${{github.event.pull_request.title}}\",
+                    \"number\": \"${{github.event.pull_request.number}}\",
+                    \"html_url\": \"${{github.event.pull_request.html_url}}\",
+                    \"owner_id\": \"${{github.event.pull_request.user.id}}\"
+                  }"
+
+            - name: Report if build failed
+              if: ${{ failure() }}
+              uses: satak/webrequest-action@master
+              with:
+                  url: https://bitbucket-handler-demo.herokuapp.com/api/build_result
+                  method: POST
+                  headers: "{\"Content-Type\": \"application/json\"}"
+                  payload: "{
+                    \"status\": \"failed\",
+                    \"title\": \"${{github.event.pull_request.title}}\",
+                    \"number\": \"${{github.event.pull_request.number}}\",
+                    \"html_url\": \"${{github.event.pull_request.html_url}}\",
+                    \"owner_id\": \"${{github.event.pull_request.user.id}}\"
+                  }"

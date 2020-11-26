@@ -1,7 +1,11 @@
-import { constructMessage } from "./message/factory";
+import {
+    constructBuildResultMessage,
+    constructRequestReviewMessage,
+} from "./message/factory";
 import * as repository from "./repository";
 import TelegramBotClient from "./bot/client";
 import User from "./const/User";
+import BuildResult from "./const/BuildResult";
 import UserAlreadyExistsException from "./exception/UserAlreadyExistsException";
 
 const PLEASE_REVIEW_QUERY = "please review";
@@ -35,13 +39,27 @@ async function sendMessageToAllReviewers(users, pullRequest, commenterName) {
     users.forEach((user) => {
         botClient.sendMessage(
             user.data()[User.ATTRIBUTE_CHAT_ID],
-            constructMessage(
+            constructRequestReviewMessage(
                 user.data()[User.ATTRIBUTE_NAME],
                 pullRequest,
                 commenterName
             )
         );
     });
+}
+
+async function sendBuildResultMessageToOwner(user, buildResult) {
+    const botClient = new TelegramBotClient().getInstance();
+
+    botClient.sendMessage(
+        user.data()[User.ATTRIBUTE_CHAT_ID],
+        constructBuildResultMessage(
+            buildResult[BuildResult.ATTRIBUTE_HTML_URL],
+            buildResult[BuildResult.ATTRIBUTE_NUMBER],
+            buildResult[BuildResult.ATTRIBUTE_STATUS],
+            buildResult[BuildResult.ATTRIBUTE_TITLE]
+        )
+    );
 }
 
 async function createOneUser(chatId, bitbucketId, username) {
@@ -62,4 +80,9 @@ async function createOneUser(chatId, bitbucketId, username) {
     throw new UserAlreadyExistsException(existingData);
 }
 
-export { createOneUser, sendMessageToAllReviewers, parseRequestBody };
+export {
+    createOneUser,
+    parseRequestBody,
+    sendBuildResultMessageToOwner,
+    sendMessageToAllReviewers,
+};
