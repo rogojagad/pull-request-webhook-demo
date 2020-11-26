@@ -21,7 +21,7 @@ describe("message factory", () => {
         body += `Link: ${pullRequest.links.html.href}\n\n`;
         body += `Thank you`;
 
-        const result = factory.constructMessage(
+        const result = factory.constructRequestReviewMessage(
             reviewerName,
             pullRequest,
             commenterName
